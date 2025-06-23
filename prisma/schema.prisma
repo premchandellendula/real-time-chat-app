@@ -41,6 +41,8 @@ model Chat {
   groupAdmin   User?   @relation("GroupAdmin", fields: [groupAdminId], references: [id])
   groupAdminId String? @db.Uuid
 
+  imageUrl String?
+
   users    User[]    @relation("UserChats")
   messages Message[] @relation("ChatMessages")
 
