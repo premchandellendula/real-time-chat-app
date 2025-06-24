@@ -55,6 +55,7 @@ export async function POST(req: NextRequest) {
         const response = NextResponse.json({
             message: "Signin successful",
             data: {
+                id: user.id,
                 name: user.name,
                 email: user.email,
                 imageUrl: user.imageUrl
