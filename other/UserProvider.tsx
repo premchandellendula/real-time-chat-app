@@ -28,7 +28,7 @@ const UserProvider = ({children}: UserProviderProps) => {
 
     const login = async () => {
         try {
-            const res = await axios.get(`/auth/me`, {
+            const res = await axios.get(`/api/auth/me`, {
                 withCredentials: true
             });
 
