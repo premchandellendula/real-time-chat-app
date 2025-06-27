@@ -3,6 +3,7 @@ import { useUser } from "@/hooks/useUser";
 import { useEffect, useRef, useState } from "react";
 import UserIcon from "../icons/UserIcon";
 import LogoutIcon from "../icons/LogoutIcon";
+import ProfileDialog from "../dialog/ProfileDialog";
 
 interface IFlyout {
     setIsFlyoutOpen: (value: boolean) => void
@@ -42,7 +43,7 @@ export default function Flyout({setIsFlyoutOpen}: IFlyout){
                 <span className="text-lg">Logout</span>
             </div>
 
-            {/* {isDialogOpen && <ProfileDialog user={user} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />} */}
+            {isDialogOpen && <ProfileDialog user={user} isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />}
         </div>
     )
 }
