@@ -142,7 +142,7 @@ export default function Signup(){
 
                             {confirmPasswordError && <p className="text-red-500">{confirmPasswordError}</p>}
 
-                            <Button type="submit" text="Signup" variant="primary" size="sm" width="full" />
+                            <Button type="submit" text="Signup" variant="primary" size="sm" width="full" loading={loading} disabled={!canSubmit || loading} />
                             <BottomWarning label="Already have an account?" to="/signin" buttonText="Signin" />
                         </div>
                 </form>

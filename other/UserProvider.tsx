@@ -22,7 +22,7 @@ interface UserProviderProps {
     children: React.ReactNode
 }
 
-const UserProvider = ({children}: UserProviderProps) => {
+export const UserProvider = ({children}: UserProviderProps) => {
     const [user, setUser] = useState<UserType | null>(null)
     const router = useRouter()
 
@@ -41,7 +41,7 @@ const UserProvider = ({children}: UserProviderProps) => {
 
     const logout = async () => {
         try {
-            await axios.post(`/auth/logout`, {}, {
+            await axios.post(`/api/auth/logout`, {}, {
                 withCredentials: true
             })
             setUser(null)
@@ -61,5 +61,3 @@ const UserProvider = ({children}: UserProviderProps) => {
         </UserContext.Provider>
     )
 }
-
-export default UserProvider;
