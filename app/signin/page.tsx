@@ -76,7 +76,7 @@ export default function Signin(){
                         <InputBox type="text" placeholder="Email Address" name="email" id="email" onChange={handleChange} />
                         <PasswordInputBox placeholder="Password" name="password" id="password" onChange={handleChange} />
                         {error && <p className="text-red-500">{error}</p>}
-                        <Button type="submit" text="Signin" variant="primary" size="sm" width="full" />
+                        <Button type="submit" text="Signin" variant="primary" size="sm" width="full" loading={loading} disabled={!canSubmit || loading} />
                         <BottomWarning label="Don't have an account?" to="/signup" buttonText="Signup" />
                     </div>
                 </form>
