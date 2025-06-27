@@ -1,14 +1,8 @@
 "use client"
+import { UserType } from "@/config";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
-
-type UserType = {
-    _id: string,
-    name: string,
-    email: string,
-    imageUrl: string
-}
 
 type UserContextType = {
     user: UserType | null

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { UserProvider } from "@/other/UserProvider";
 import { Toaster } from "sonner";
+import { ChatProvider } from "@/other/ChatProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,8 +37,10 @@ export default function RootLayout({
           defaultTheme="system" 
         >
           <UserProvider>
-            {children}
-            <Toaster richColors position='bottom-left' />
+            <ChatProvider>
+              {children}
+              <Toaster richColors position='top-right' />
+            </ChatProvider>
           </UserProvider>
         </ThemeProvider>
       </body>
