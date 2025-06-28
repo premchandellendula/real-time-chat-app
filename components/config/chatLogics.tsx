@@ -34,3 +34,7 @@ export const handleSearch = async (query: string, search: string, setSearch: (va
         toast.error(errorMessage)
     }
 }
+
+export const isSameUser = (messages: any, m: any, i: any) => {
+    return i > 0 && messages[i-1].user.id === m.user.id
+}

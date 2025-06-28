@@ -11,7 +11,7 @@ export default function Chats(){
             <Sidebar />
             <div className="flex w-full">
                 <MyChats fetchAgain={fetchAgain} />
-                <ChatBox />
+                <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
             </div>
         </div>
     )
