@@ -9,7 +9,8 @@ interface Chat {
     latestMessage?: string;
     isGroupChat: boolean,
     chatName: string
-    groupAdmin: UserType
+    groupAdmin: UserType,
+    imageUrl?: string
 }
 
 type SelectedChat = Chat | null;

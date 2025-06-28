@@ -74,7 +74,7 @@ export default function MyChats({fetchAgain}: {fetchAgain: boolean}){
                 openModal={() => setIsModalOpen(true)} />
 
             {chats.length === 0 ? (
-                <p className="text-gray-500">No chats found.</p>
+                <p className="text-gray-500 mt-10">No chats found.</p>
             ) : (
                 <ul className="flex flex-col gap-1.5 mt-4">
                     {chats.map((chat: any) => (
