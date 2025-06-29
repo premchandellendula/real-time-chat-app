@@ -3,6 +3,7 @@ import { useUser } from "@/hooks/useUser";
 import ChatIcon from "../icons/ChatIcon";
 import Profile from "../profile/Profile";
 import ThemeButton from "../theme/ThemeButton";
+import Notifications from "../notification/Notifications";
 
 export default function Sidebar(){
     const { user } = useUser()
@@ -13,6 +14,7 @@ export default function Sidebar(){
             </div>
 
             <div className="flex flex-col items-center gap-2">
+                <Notifications />
                 <ThemeButton />
                 {user?.name && <Profile /> }
             </div>
