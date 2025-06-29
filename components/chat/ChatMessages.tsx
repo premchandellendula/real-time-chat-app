@@ -2,12 +2,14 @@
 import { useUser } from "@/hooks/useUser"
 import { isSameUser } from "../config/chatLogics"
 import { useEffect, useRef } from "react";
+import TypingIndicator from "../animation/TypingIndicator";
 
 interface IChatMessages {
-    messages: any[]
+    messages: any[],
+    isTyping: boolean
 }
 
-export default function ChatMessages({messages}: IChatMessages){
+export default function ChatMessages({messages, isTyping}: IChatMessages){
     const messageEndRef = useRef<HTMLDivElement>(null)
     const { user } = useUser();
 
@@ -31,6 +33,11 @@ export default function ChatMessages({messages}: IChatMessages){
                 </div>
             ))}
 
+            {isTyping ? (
+                <TypingIndicator />
+            ) : (
+                <></>
+            )}
             <div ref={messageEndRef} ></div>
         </div>
     )

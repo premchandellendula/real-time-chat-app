@@ -4,3 +4,5 @@ export type UserType = {
     email: string,
     imageUrl: string
 }
+
+export const SOCKET_URL = "http://localhost:3001"

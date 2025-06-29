@@ -1,5 +1,5 @@
 import { useChat } from "@/other/ChatProvider"
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { getSender, getSenderFullDetails } from "../config/chatLogics"
 import { useUser } from "@/hooks/useUser"
 import EyeIcon from "../icons/EyeIcon"
@@ -10,6 +10,8 @@ import SendIcon from "../icons/SendIcon"
 import { toast } from "sonner"
 import axios from "axios"
 import ChatMessages from "./ChatMessages"
+import { io, Socket } from "socket.io-client"
+import { SOCKET_URL } from "@/config"
 
 interface IChatsProps {
     fetchAgain: boolean,
@@ -22,12 +24,69 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
     const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false)
     const [isGroupChatModalOpen, setIsGroupChatModalOpen] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [socketConnected, setSocketConnected] = useState(false)
+    const [typing, setTyping] = useState(false)
+    const [isTyping, setIsTyping] = useState(false)
+    const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const { selectedChat } = useChat()
+    const { selectedChat, notification, setNotification } = useChat()
     const { user } = useUser()
 
+    const socketRef = useRef<Socket | null>(null)
+    const selectedChatRef = useRef<any>(null)
+
+    useEffect(() => {
+        if(!user || socketRef.current?.connected) return;
+        
+        socketRef.current = io(SOCKET_URL)
+        socketRef.current.emit("setup", user)
+        socketRef.current.on("connected", () => setSocketConnected(true))
+
+        socketRef.current.on("typing", () => setIsTyping(true))
+        socketRef.current.on("stop typing", () => setIsTyping(false))
+
+        socketRef.current.on("message received", (newMessageReceived) => {
+            // console.log("Message received:", newMessageReceived)
+
+            if(!selectedChatRef.current || selectedChatRef.current.id !== newMessageReceived.chat.id){
+                console.log("Message not for current chat, showing notification");
+
+                if(!notification.includes(newMessageReceived)){
+                    setNotification([newMessageReceived, ...notification])
+                    setFetchAgain(!fetchAgain)
+                }
+            }
+
+            setMessages((prevMessages: any) => [...prevMessages, newMessageReceived])
+        })
+
+        socketRef.current.on("disconnect", () => {
+            console.log("Socket disconnected")
+            setSocketConnected(false)
+        })
+
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.disconnect();
+                socketRef.current = null
+                setSocketConnected(false)
+            }
+        };
+    }, [user])
+
+    useEffect(() => {
+        if(!selectedChat){
+            selectedChatRef.current = null
+            return
+        }
+
+        console.log("Selected chat changes: ", selectedChat.id)
+        selectedChatRef.current = selectedChat
+        fetchMessages()
+    }, [selectedChat])
+
     const fetchMessages = async () => {
-        if(!selectedChat) return;
+        if(!selectedChat || !socketRef.current) return;
         setLoading(true)
 
         try {
@@ -36,6 +95,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
             })
 
             setMessages(response.data.messages)
+            socketRef.current?.emit("join chat", selectedChat.id)
         }catch(err) {
             const errorMessage = axios.isAxiosError(err)
             ? err.response?.data?.message || err.message
@@ -49,10 +109,6 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
         }
     }
 
-    useEffect(() => {
-        fetchMessages()
-    }, [selectedChat])
-
     const handleSendMessage = async (e?: React.KeyboardEvent | React.MouseEvent) => {
         e?.preventDefault()
 
@@ -61,7 +117,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
             return
         }
 
-        if(!selectedChat){
+        if(!selectedChat || !socketRef.current){
             toast.error("Chat not selected or connection lost")
             return;
         }
@@ -75,7 +131,9 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
                 message: messageToSend
             }, {withCredentials: true})
 
-            setMessages((prevMessages: any) => [...prevMessages, response.data.newMessage])
+            socketRef.current.emit("new message", response.data.fullMessage)
+            setMessages((prevMessages: any) => [...prevMessages, response.data.fullMessage])
+            socketRef.current.emit("stop typing", selectedChat.id)
         }catch(err) {
             const errorMessage = axios.isAxiosError(err)
             ? err.response?.data?.message || err.message
@@ -90,6 +148,22 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
 
     const typingHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setNewMessage(e.target.value)
+
+        if(!socketConnected) return
+
+        if(!typing){
+            setTyping(true)
+            socketRef.current?.emit("typing", selectedChat?.id)
+        }
+
+        if(typingTimeoutRef.current){
+            clearTimeout(typingTimeoutRef.current)
+        }
+
+        typingTimeoutRef.current = setTimeout(() => {
+            socketRef.current?.emit("stop typing", selectedChat?.id)
+            setTyping(false)
+        }, 3000)
     }
 
     return (
@@ -132,12 +206,12 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
                                 <Spinner />
                             </div>
                         ) : (
-                            <ChatMessages messages={messages} />
+                            <ChatMessages messages={messages} isTyping={isTyping} />
                         )}
                     </div>
 
                     <div className="relative border-t border-gray-300 dark:border-gray-800 px-2 py-1.5">
-                        <input 
+                        <input
                         type="text" 
                         name="newmessage" 
                         id="newmessage" 
