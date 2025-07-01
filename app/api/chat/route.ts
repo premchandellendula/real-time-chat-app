@@ -25,7 +25,7 @@ export async function POST(req: NextRequest){
     if (!("authorized" in auth)) return auth;
 
     try {
-        let existingChat = await prisma.chat.findFirst({
+        const existingChat = await prisma.chat.findFirst({
             where: {
                 isGroupChat: false,
                 users: {

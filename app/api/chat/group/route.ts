@@ -16,6 +16,7 @@ export async function POST(req: NextRequest){
     try {
         users = JSON.parse(body.users);
     } catch (err) {
+        console.log(err)
         return NextResponse.json({ message: "Invalid users format" }, { status: 400 });
     }
     
