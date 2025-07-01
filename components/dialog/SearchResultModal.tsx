@@ -20,9 +20,9 @@ export default function SearchResultModal({ users, onClose, onUserSelect }: Sear
                 <ul className="flex flex-col gap-3">
                     {users.map((user: UserType) => (
                         <li
-                        key={user._id}
+                        key={user.id}
                         className="cursor-pointer p-1 rounded-md bg-gray-200/80 dark:bg-gray-900/50 hover:bg-gray-300/60 dark:hover:bg-gray-900 dark:text-white"
-                        onClick={() => onUserSelect(user._id)}
+                        onClick={() => onUserSelect(user.id)}
                         >
                         <div className="flex items-center gap-3">
                             <img src={user.imageUrl} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
