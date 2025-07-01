@@ -5,4 +5,4 @@ export type UserType = {
     imageUrl: string
 }
 
-export const SOCKET_URL = "http://localhost:3001"
+export const SOCKET_URL = "https://socket-server-jshk.onrender.com/"
