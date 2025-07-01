@@ -3,7 +3,7 @@ import { PrismaClient } from "@/app/generated/prisma";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, { params }: { params: { chatId: string } }){
-    const { chatId } = await params
+    const { chatId } = params
 
     try {
         const messages = await prisma.message.findMany({
