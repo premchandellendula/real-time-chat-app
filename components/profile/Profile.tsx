@@ -1,6 +1,5 @@
 "use client"
 import { useUser } from '@/hooks/useUser'
-import Image from 'next/image'
 import React, { useState } from 'react'
 import Flyout from './Flyout'
 

@@ -1,7 +1,7 @@
 "use client"
 
 import axios from "axios"
-import { ChangeEvent, useState } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
 
 interface SearchBarProps {

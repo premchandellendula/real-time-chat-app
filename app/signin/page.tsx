@@ -66,12 +66,12 @@ export default function Signin(){
     }
     return (
         <div className="dark:bg-[#06060b] flex h-screen">
-            <div className="w-[4.5%]">
+            <div>
                 <Sidebar />
             </div>
             <div className="w-[95.5%] flex justify-center items-center h-screen">
-                <form onSubmit={handleSubmit}>
-                    <div className="w-96 rounded-md px-6 py-4 shadow-lg border border-gray-200 dark:border-gray-900">
+                <form onSubmit={handleSubmit} className="w-[95%] md:w-auto">
+                    <div className="md:w-96 rounded-md px-6 py-4 shadow-lg border border-gray-200 dark:border-gray-900">
                         <Heading text="Signin" size="2xl" />
                         <InputBox type="text" placeholder="Email Address" name="email" id="email" onChange={handleChange} />
                         <PasswordInputBox placeholder="Password" name="password" id="password" onChange={handleChange} />
