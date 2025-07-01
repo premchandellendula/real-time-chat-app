@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authMiddleware } from "../../lib/authMiddleware";
-import { PrismaClient } from "@/app/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 export async function GET(req: NextRequest){

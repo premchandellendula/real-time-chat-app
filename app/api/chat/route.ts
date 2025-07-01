@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import zod from 'zod'
-import { PrismaClient } from "@/app/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "../lib/authMiddleware";
 const prisma = new PrismaClient();
 
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest){
     if (!("authorized" in auth)) return auth;
 
     try {
-        let existingChat = await prisma.chat.findFirst({
+        const existingChat = await prisma.chat.findFirst({
             where: {
                 isGroupChat: false,
                 users: {

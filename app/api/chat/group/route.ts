@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@/app/generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "../../lib/authMiddleware";
 const prisma = new PrismaClient()
 
@@ -16,6 +16,7 @@ export async function POST(req: NextRequest){
     try {
         users = JSON.parse(body.users);
     } catch (err) {
+        console.log(err)
         return NextResponse.json({ message: "Invalid users format" }, { status: 400 });
     }
     

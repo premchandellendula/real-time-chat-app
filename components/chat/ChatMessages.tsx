@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import TypingIndicator from "../animation/TypingIndicator";
 
 interface IChatMessages {
+    //@ts-ignore
     messages: any[],
     isTyping: boolean
 }
@@ -19,6 +20,7 @@ export default function ChatMessages({messages, isTyping}: IChatMessages){
 
     return (
         <div className="mb-2 flex flex-col overflow-y-auto px-1 py-2">
+            //@ts-ignore
             {messages.map((message: any, i: any) => (
                 <div key={i} className="flex items-end">
                     <div style={{

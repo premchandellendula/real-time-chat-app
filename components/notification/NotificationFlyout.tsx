@@ -24,6 +24,7 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
         }
     }, [])
 
+    //@ts-ignore
     const handleNotificationClick = (notify: any) => {
         setSelectedChat(notify.chat)
         setNotification(notification.filter((n) => n !== notify))
@@ -53,6 +54,7 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
                     </div>
                 ) : (
                     <ul className="divide-y divide-gray-100 dark:divide-gray-800">
+                        //@ts-ignore
                         {notification.map((notify: any, index: number) => (
                             <li
                                 key={index}
