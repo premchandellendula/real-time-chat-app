@@ -1,7 +1,6 @@
 "use client"
 import { UserType } from "@/config"
 import { useChat } from "@/other/ChatProvider"
-
 import { useState } from "react"
 import CrossIcon from "../icons/CrossIcon"
 import InputBox from "../ui/InputBox"

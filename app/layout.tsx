@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { UserProvider } from "@/other/UserProvider";
 import { Toaster } from "sonner";
 import { ChatProvider } from "@/other/ChatProvider";
+import ResponsiveOverlay from "@/components/overlay/ResponsiveOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -38,6 +40,7 @@ export default function RootLayout({
         >
           <UserProvider>
             <ChatProvider>
+              <ResponsiveOverlay />
               {children}
               <Toaster richColors position='top-right' />
             </ChatProvider>
