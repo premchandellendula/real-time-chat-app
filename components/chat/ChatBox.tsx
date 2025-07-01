@@ -19,7 +19,7 @@ interface IChatsProps {
 }
 
 export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
-    //ts-ignore
+    //@ts-ignore
     const [messages, setMessages] = useState<any>([])
     const [newMessage, setNewMessage] = useState<string>("")
     const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false)
@@ -34,7 +34,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
     const { user } = useUser()
 
     const socketRef = useRef<Socket | null>(null)
-    //ts-ignore
+    //@ts-ignore
     const selectedChatRef = useRef<any>(null)
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
                     setFetchAgain(!fetchAgain)
                 }
             }
-            //ts-ignore
+            //@ts-ignore
             setMessages((prevMessages: any) => [...prevMessages, newMessageReceived])
         })
 
@@ -134,7 +134,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
             }, {withCredentials: true})
 
             socketRef.current.emit("new message", response.data.fullMessage)
-            //ts-ignore
+            //@ts-ignore
             setMessages((prevMessages: any) => [...prevMessages, response.data.fullMessage])
             socketRef.current.emit("stop typing", selectedChat.id)
         }catch(err) {

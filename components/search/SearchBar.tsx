@@ -5,7 +5,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 interface SearchBarProps {
-    //ts-ignore
+    //@ts-ignore
     onResults: (users: any) => void;
     openModal: () => void;
 }
