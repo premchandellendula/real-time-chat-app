@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/app/generated/prisma";
 const prisma = new PrismaClient();
 
-export async function GET({
+export async function GET(req: NextRequest, {
         params,
     }: {
-        params: { chatId: string }
+        params: Promise<{ chatId: string }>
     }){
     const {chatId} = await params;
 
