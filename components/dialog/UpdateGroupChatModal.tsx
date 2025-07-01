@@ -155,8 +155,8 @@ export default function UpdateGroupChatModal({fetchAgain, setFetchAgain, isGroup
                     </form>
 
                     {search.length > 0 ? (
-                        searchResult.slice(0,4).map((user: any) => (
-                            <UserListItem key={user._id} user={user} handleFunction={() => handleAddUser(user)} />
+                        searchResult.slice(0,4).map((user: UserType) => (
+                            <UserListItem key={user.id} user={user} handleFunction={() => handleAddUser(user)} />
                         ))
                     ) : (
                         <span className="text-gray-300 text-center">loading</span>

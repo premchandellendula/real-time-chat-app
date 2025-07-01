@@ -77,6 +77,7 @@ export default function MyChats({fetchAgain}: {fetchAgain: boolean}){
                 <p className="text-gray-500">No chats found.</p>
             ) : (
                 <ul className="flex flex-col gap-1.5 mt-4">
+                    //ts-ignore
                     {chats.map((chat: any) => (
                         <li
                         key={chat.id}

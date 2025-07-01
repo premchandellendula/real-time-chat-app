@@ -90,6 +90,7 @@ export default function Signup(){
         }
     }
 
+    //ts-ignore
     const postDetails = async (pics: any) => {
         if(!pics){
             toast.warning("Please select an image");

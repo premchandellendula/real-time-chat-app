@@ -1,12 +1,12 @@
 "use client"
 
-import { UserType } from "@/config";
 import axios from "axios"
 import { useState } from "react"
 import { toast } from "sonner"
 
 interface SearchBarProps {
-    onResults: (users: UserType[]) => void;
+    //ts-ignore
+    onResults: (users: any) => void;
     openModal: () => void;
 }
 
