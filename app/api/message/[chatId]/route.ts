@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/app/generated/prisma";
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest, { params }: { params: { chatId: string } }){
+export async function GET(req: NextRequest, { params }: { params: Promise<{ chatId: string }> }){
     const { chatId } = await params
 
     try {
