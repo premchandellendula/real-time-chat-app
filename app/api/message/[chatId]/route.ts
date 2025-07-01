@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/app/generated/prisma";
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest, { params }: { params: { chatId: string } }){
-    const { chatId } = params
+export async function GET(req: NextRequest, context: { params: { chatId: string } }){
+    const { chatId } = context.params
 
     try {
         const messages = await prisma.message.findMany({
