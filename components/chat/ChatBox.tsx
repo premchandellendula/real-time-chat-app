@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import axios from "axios"
 import ChatMessages from "./ChatMessages"
 import { io, Socket } from "socket.io-client"
-import { SOCKET_URL } from "@/config"
+import { Chat, MessageType, SOCKET_URL } from "@/config"
 
 interface IChatsProps {
     fetchAgain: boolean,
@@ -19,8 +19,7 @@ interface IChatsProps {
 }
 
 export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
-    //@ts-ignore
-    const [messages, setMessages] = useState<any>([])
+    const [messages, setMessages] = useState<MessageType[]>([])
     const [newMessage, setNewMessage] = useState<string>("")
     const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false)
     const [isGroupChatModalOpen, setIsGroupChatModalOpen] = useState(false)
@@ -34,8 +33,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
     const { user } = useUser()
 
     const socketRef = useRef<Socket | null>(null)
-    //@ts-ignore
-    const selectedChatRef = useRef<any>(null)
+    const selectedChatRef = useRef<Chat | null>(null)
 
     useEffect(() => {
         if(!user || socketRef.current?.connected) return;
@@ -58,8 +56,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
                     setFetchAgain(!fetchAgain)
                 }
             }
-            //@ts-ignore
-            setMessages((prevMessages: any) => [...prevMessages, newMessageReceived])
+            setMessages((prevMessages: MessageType[]) => [...prevMessages, newMessageReceived])
         })
 
         socketRef.current.on("disconnect", () => {
@@ -134,8 +131,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
             }, {withCredentials: true})
 
             socketRef.current.emit("new message", response.data.fullMessage)
-            //@ts-ignore
-            setMessages((prevMessages: any) => [...prevMessages, response.data.fullMessage])
+            setMessages((prevMessages: MessageType[]) => [...prevMessages, response.data.fullMessage])
             socketRef.current.emit("stop typing", selectedChat.id)
         }catch(err) {
             const errorMessage = axios.isAxiosError(err)

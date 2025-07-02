@@ -3,10 +3,10 @@ import { useUser } from "@/hooks/useUser"
 import { isSameUser } from "../config/chatLogics"
 import { useEffect, useRef } from "react";
 import TypingIndicator from "../animation/TypingIndicator";
+import { MessageType } from "@/config";
 
 interface IChatMessages {
-    //@ts-ignore
-    messages: any[],
+    messages: MessageType[],
     isTyping: boolean
 }
 
@@ -20,8 +20,7 @@ export default function ChatMessages({messages, isTyping}: IChatMessages){
 
     return (
         <div className="mb-2 flex flex-col overflow-y-auto px-1 py-2">
-            //@ts-ignore
-            {messages.map((message: any, i: any) => (
+            {messages.map((message: MessageType, i: number) => (
                 <div key={i} className="flex items-end">
                     <div style={{
                             marginTop: isSameUser(messages, message, i) ? 4 : 10

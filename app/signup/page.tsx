@@ -90,8 +90,7 @@ export default function Signup(){
         }
     }
 
-    // @ts-ignore
-    const postDetails = async (pics: any) => {
+    const postDetails = async (pics: File) => {
         if(!pics){
             toast.warning("Please select an image");
             return;
@@ -137,7 +136,12 @@ export default function Signup(){
                             <InputBox type="text" placeholder="Full Name" name="name" id="name" onChange={handleChange} />
                             <PasswordInputBox placeholder="Password" name="password" id="password" onChange={handleChange} />
                             <PasswordInputBox placeholder="Confirm Password" name="confirmPassword" id="confirmPassword" onChange={handleChange} />
-                            <FileInput name="imageUrl" id="imageUrl" onChange={(e) => postDetails(e.target.files?.[0])} />
+                            <FileInput name="imageUrl" id="imageUrl" onChange={(e) => {
+                                                                                        const file = e.target.files?.[0];
+                                                                                        if (file) {
+                                                                                            postDetails(file);
+                                                                                        }
+                                                                                    }} />
                             
                             {error && <p className="text-red-500">{error}</p>}
 

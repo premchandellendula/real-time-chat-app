@@ -20,7 +20,7 @@ export default function GroupChatModal({isGroupChatModalOpen, setIsGroupChatModa
     const [groupChatName, setGroupChatName] = useState("")
     const [selectedUsers, setSelectedUsers] = useState<UserType[]>([])
     const [search, setSearch] = useState("")
-    const [searchResult, setSearchResult] = useState([])
+    const [searchResult, setSearchResult] = useState<UserType[]>([])
     const [loading, setLoading] = useState(false)
 
     const { chats, setChats } = useChat() 

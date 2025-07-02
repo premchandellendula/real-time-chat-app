@@ -3,6 +3,7 @@ import { useUser } from '@/hooks/useUser';
 import { useChat } from '@/other/ChatProvider';
 import React, { useEffect, useRef } from 'react'
 import { getSender } from '../config/chatLogics';
+import { FullMessageType } from '@/config';
 
 const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) => void}) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -24,8 +25,7 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
         }
     }, [])
 
-    //@ts-ignore
-    const handleNotificationClick = (notify: any) => {
+    const handleNotificationClick = (notify: FullMessageType) => {
         setSelectedChat(notify.chat)
         setNotification(notification.filter((n) => n !== notify))
         setIsNotifiOpen(false)
@@ -54,8 +54,7 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
                     </div>
                 ) : (
                     <ul className="divide-y divide-gray-100 dark:divide-gray-800">
-                        //@ts-ignore
-                        {notification.map((notify: any, index: number) => (
+                        {notification.map((notify: FullMessageType, index: number) => (
                             <li
                                 key={index}
                                 onClick={() => handleNotificationClick(notify)}
