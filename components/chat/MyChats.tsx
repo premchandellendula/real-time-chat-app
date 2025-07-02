@@ -9,9 +9,10 @@ import { toast } from "sonner";
 import { getSender, getSenderFullDetails } from "../config/chatLogics";
 import { useUser } from "@/hooks/useUser";
 import GroupChatModal from "../dialog/GroupChatModal";
+import { Chat, UserType } from "@/config";
 
 export default function MyChats({fetchAgain}: {fetchAgain: boolean}){
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState<UserType[]>([])
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isGroupChatModalOpen, setIsGroupChatModalOpen] = useState(false)
     const { selectedChat, setSelectedChat, chats, setChats } = useChat()
@@ -77,8 +78,7 @@ export default function MyChats({fetchAgain}: {fetchAgain: boolean}){
                 <p className="text-gray-500">No chats found.</p>
             ) : (
                 <ul className="flex flex-col gap-1.5 mt-4">
-                    //@ts-ignore
-                    {chats.map((chat: any) => (
+                    {chats.map((chat: Chat) => (
                         <li
                         key={chat.id}
                         onClick={() => setSelectedChat(chat)}

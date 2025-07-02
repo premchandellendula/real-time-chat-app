@@ -3,6 +3,7 @@ import { useUser } from '@/hooks/useUser';
 import { useChat } from '@/other/ChatProvider';
 import React, { useEffect, useRef } from 'react'
 import { getSender } from '../config/chatLogics';
+import { FullMessageType } from '@/config';
 
 const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) => void}) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -24,8 +25,7 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
         }
     }, [])
 
-    //@ts-ignore
-    const handleNotificationClick = (notify: any) => {
+    const handleNotificationClick = (notify: FullMessageType) => {
         setSelectedChat(notify.chat)
         setNotification(notification.filter((n) => n !== notify))
         setIsNotifiOpen(false)
@@ -50,12 +50,11 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
                 {!notification.length ? (
                     <div className="flex flex-col items-center justify-center py-2 px-4">
                         <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">No New Messages</p>
-                        <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">You're all caught up!</p>
+                        <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">You&apos;re all caught up!</p>
                     </div>
                 ) : (
                     <ul className="divide-y divide-gray-100 dark:divide-gray-800">
-                        //@ts-ignore
-                        {notification.map((notify: any, index: number) => (
+                        {notification.map((notify: FullMessageType, index: number) => (
                             <li
                                 key={index}
                                 onClick={() => handleNotificationClick(notify)}
@@ -86,7 +85,7 @@ const NotificationFlyout = ({setIsNotifiOpen}: {setIsNotifiOpen: (val: boolean) 
                                         {/* Message preview if available */}
                                         {notify.message && (
                                             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
-                                                "{notify.message}"
+                                                &quot;{notify.message}&quot;
                                             </p>
                                         )}
                                     </div>

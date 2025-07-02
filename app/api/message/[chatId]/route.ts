@@ -21,6 +21,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ chat
                     select: {
                         id: true,
                         name: true,
+                        email: true,
                         imageUrl: true
                     }
                 }

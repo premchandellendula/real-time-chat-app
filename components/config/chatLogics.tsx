@@ -1,4 +1,4 @@
-import { UserType } from "@/config";
+import { MessageType, UserType } from "@/config";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -9,8 +9,8 @@ export const getSender = (loggedUser: UserType | null, users: UserType[]) => {
 export const getSenderFullDetails = (loggedUser: UserType | null, users: UserType[]) => {
     return users[0].id === loggedUser?.id ? users[1] : users[0]
 }
-//@ts-ignore
-export const handleSearch = async (query: string, search: string, setSearch: (val: string) => void, setSearchResult: (val: any) => void) => {
+
+export const handleSearch = async (query: string, search: string, setSearch: (val: string) => void, setSearchResult: (val: UserType[]) => void) => {
     setSearch(query)
 
     if(!query){
@@ -34,7 +34,7 @@ export const handleSearch = async (query: string, search: string, setSearch: (va
         toast.error(errorMessage)
     }
 }
-//@ts-ignore
-export const isSameUser = (messages: any, m: any, i: any) => {
+
+export const isSameUser = (messages: MessageType[], m: MessageType, i: number) => {
     return i > 0 && messages[i-1].user.id === m.user.id
 }

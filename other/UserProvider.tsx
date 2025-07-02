@@ -29,7 +29,15 @@ export const UserProvider = ({children}: UserProviderProps) => {
             // console.log(res)
             setUser(res.data.user)
         } catch (err) {
-            console.error("Failed to fetch user", err)
+            if (axios.isAxiosError(err)) {
+                if (err.response?.status === 401) {
+                    setUser(null);
+                } else {
+                    console.error("Failed to fetch user", err);
+                }
+            } else {
+                console.error("Failed to fetch user", err);
+            }
         }
     }
 

@@ -21,7 +21,7 @@ interface IUpdateGroupChatModalProps {
 export default function UpdateGroupChatModal({fetchAgain, setFetchAgain, isGroupChatModalOpen, setIsGroupChatModalOpen}: IUpdateGroupChatModalProps){
     const [groupChatName, setGroupChatName] = useState("")
     const [search, setSearch] = useState("")
-    const [searchResult, setSearchResult] = useState([])
+    const [searchResult, setSearchResult] = useState<UserType[]>([])
     const [renameLoading, setRenameLoading] = useState(false)
     const [loading, setLoading] = useState(false)
     const { selectedChat, setSelectedChat } = useChat();
@@ -41,7 +41,7 @@ export default function UpdateGroupChatModal({fetchAgain, setFetchAgain, isGroup
                 withCredentials: true
             })
 
-            userToRemove?.id === user?.id ? setSelectedChat(null) : setSelectedChat(response.data.groupChat)
+            setSelectedChat((userToRemove?.id === user?.id) ? null : response.data.chat)
             setFetchAgain(!fetchAgain)
         }catch(err){
             let errorMessage = "Something went wrong"
