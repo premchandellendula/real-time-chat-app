@@ -113,8 +113,8 @@ export default function GroupChatModal({isGroupChatModalOpen, setIsGroupChatModa
                 </form>
 
                 {search.length > 0 ? (
-                    searchResult.slice(0,4).map((user: any) => (
-                        <UserListItem key={user._id} user={user} handleFunction={() => handleGroup(user)} />
+                    searchResult.slice(0,4).map((user: UserType) => (
+                        <UserListItem key={user.id} user={user} handleFunction={() => handleGroup(user)} />
                     ))
                 ) : (
                     <span className="text-gray-300 text-center">loading</span>
