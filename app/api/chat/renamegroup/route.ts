@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import zod from 'zod';
-import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "../../lib/authMiddleware";
-const prisma = new PrismaClient()
+import prisma from "@/db";
 
 const renamePutBody = zod.object({
     chatName: zod.string(),

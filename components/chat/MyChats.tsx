@@ -86,12 +86,15 @@ export default function MyChats({fetchAgain}: {fetchAgain: boolean}){
                             <div className="flex items-center gap-3">
                                 {!chat.isGroupChat ? (
                                     <>
-                                        <img src={getSenderFullDetails(user, chat.users).imageUrl} alt={getSenderFullDetails(user, chat.users).name} className="w-10 h-10 rounded-full object-cover" />
-                                        <span>{getSender(user, chat.users)}</span>
+                                        <img src={getSenderFullDetails(user, chat.users).imageUrl} alt={getSenderFullDetails(user, chat.users).name} className="w-12 h-12 rounded-full object-cover" />
+                                        <div className="flex flex-col">
+                                            <span>{getSender(user, chat.users)}</span>
+                                            <span className="text-sm text-gray-600 dark:text-gray-500">{chat.latestMessage?.message}</span>
+                                        </div>
                                     </>
                                 ) : (
                                     <>
-                                        <img src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg" alt="group image" className="rounded-full w-10 h-10 object-cover" />
+                                        <img src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg" alt="group image" className="rounded-full w-12 h-12 object-cover" />
                                         <span className="h-10 flex items-center">{chat.chatName}</span>
                                     </>
                                 )}
