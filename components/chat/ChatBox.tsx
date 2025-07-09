@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import axios from "axios"
 import ChatMessages from "./ChatMessages"
 import { io, Socket } from "socket.io-client"
-import { Chat, LatestMessage, MessageType, SOCKET_URL } from "@/config"
+import { Chat, MessageType, SOCKET_URL } from "@/config"
 
 interface IChatsProps {
     fetchAgain: boolean,
