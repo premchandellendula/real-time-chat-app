@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import zod from 'zod'
-import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "../lib/authMiddleware";
-const prisma = new PrismaClient();
+import prisma from "@/db";
 
 const chatBody = zod.object({
     user_id: zod.string()
@@ -119,6 +118,19 @@ export async function GET(req: NextRequest){
                         name: true,
                         email: true,
                         imageUrl: true
+                    }
+                },
+                latestMessage: {
+                    select: {
+                        id: true,
+                        message: true,
+                        createdAt: true,
+                        user: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
                     }
                 },
                 messages: {

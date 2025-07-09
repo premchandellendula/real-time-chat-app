@@ -5,10 +5,20 @@ export type UserType = {
     imageUrl: string
 }
 
+export interface LatestMessage {
+    id: string,
+    message: string,
+    created: string,
+    user: {
+        id: string,
+        name: string
+    }
+}
+
 export interface Chat {
     id: string;
     users: UserType[];
-    latestMessage?: string;
+    latestMessage?: LatestMessage;
     isGroupChat: boolean,
     chatName: string
     groupAdmin: UserType,
@@ -29,4 +39,4 @@ export type FullMessageType = {
     chat: Chat
 }
 
-export const SOCKET_URL = "https://socket-server-jshk.onrender.com/"
+export const SOCKET_URL = "http://localhost:3001"

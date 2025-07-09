@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "../../lib/authMiddleware";
-const prisma = new PrismaClient()
+import prisma from "@/db";
 
 export async function POST(req: NextRequest){
     const body = await req.json()

@@ -11,7 +11,7 @@ import { toast } from "sonner"
 import axios from "axios"
 import ChatMessages from "./ChatMessages"
 import { io, Socket } from "socket.io-client"
-import { Chat, MessageType, SOCKET_URL } from "@/config"
+import { Chat, LatestMessage, MessageType, SOCKET_URL } from "@/config"
 
 interface IChatsProps {
     fetchAgain: boolean,
@@ -29,7 +29,7 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
     const [isTyping, setIsTyping] = useState(false)
     const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const { selectedChat, notification, setNotification } = useChat()
+    const { selectedChat, notification, setNotification, setChats } = useChat()
     const { user } = useUser()
 
     const socketRef = useRef<Socket | null>(null)
@@ -82,6 +82,21 @@ export default function ChatBox({fetchAgain, setFetchAgain}: IChatsProps){
         console.log("Selected chat changes: ", selectedChat.id)
         selectedChatRef.current = selectedChat
         fetchMessages()
+        if (!socketRef.current) return;
+
+        socketRef.current.on("latestMessageUpdated", ({ chatId, latestMessage }) => {
+            setChats(prevChats =>
+                prevChats.map(chat =>
+                    chat.id === chatId
+                        ? { ...chat, latestMessage }
+                        : chat
+                )
+            );
+        });
+        
+        return () => {
+            socketRef.current?.off("latestMessageUpdated");
+        };
     }, [selectedChat])
 
     const fetchMessages = async () => {

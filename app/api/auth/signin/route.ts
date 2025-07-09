@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import zod from 'zod'
 import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient()
+import prisma from "@/db";
 
 const signinBody = zod.object({
     email: zod.string().email(),
